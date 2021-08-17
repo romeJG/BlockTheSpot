@@ -19,7 +19,7 @@ using _cef_urlrequest_create = cef_urlrequest_t * (*)(struct _cef_request_t* req
 
 static _cef_urlrequest_create cef_urlrequest_create_orig;
 
-static constexpr std::array<std::string_view, 3> blockList = { "/ads/", "/ad-logic/", "/gabo-receiver-service/" };
+static constexpr std::array<std::string_view, 3> block_list = { "/ads/", "/ad-logic/", "/gabo-receiver-service/" };
 
 cef_urlrequest_t* cef_urlrequest_create_hook (struct _cef_request_t* request,
 											  struct _cef_urlrequest_client_t* client,
@@ -40,7 +40,7 @@ cef_urlrequest_t* cef_urlrequest_create_hook (struct _cef_request_t* request,
 	delete[] c_url;
 	cef_string_userfree_utf16_free (url_utf16);
 
-	for (auto blockurl : blockList) {
+	for (const auto& blockurl : block_list) {
 		if (std::string::npos != url.find (blockurl)) {
 			g_Logger.Log ("blocked - " + url);
 			return nullptr;
@@ -103,6 +103,23 @@ DWORD WINAPI KillBanner (LPVOID)
 		}
 		else {
 			g_Logger.Log ("main process - patch failed!");
+
+			skipPod = FindPattern ((uint8_t*)hModule, mInfo.SizeOfImage, (BYTE*)"\x83\xC4\x08\x84\xC0\x0F\x84\xED\x03\x00\x00", "xxxxxxxxxxx");
+			if (skipPod)
+			{
+				DWORD oldProtect;
+				VirtualProtect ((char*)skipPod + 5, 1, PAGE_EXECUTE_READWRITE, &oldProtect);
+				memset ((char*)skipPod + 5, 0x90, 1);
+				VirtualProtect ((char*)skipPod + 5, 1, oldProtect, &oldProtect);
+
+				VirtualProtect ((char*)skipPod + 6, 1, PAGE_EXECUTE_READWRITE, &oldProtect);
+				memset ((char*)skipPod + 6, 0xE9, 1);
+				VirtualProtect ((char*)skipPod + 6, 1, oldProtect, &oldProtect);
+				g_Logger.Log ("main process 1.1.66.578.gc54d0f69-a - patch success!");
+			}
+			else {
+				g_Logger.Log ("main process 1.1.66.578.gc54d0f69-a - patch failed!");
+			}
 		}
 
 	}
