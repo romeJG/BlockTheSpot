@@ -52,12 +52,10 @@ or
 
 ### Known Issues:  
 * You may face issue [#150](https://github.com/mrpond/BlockTheSpot/issues/150).    
+* We support last 2 version of Spotify (latest + previous) only. Please check it before opening an issue.
 
 ### Additional Notes:  
-* BlockTheSpot might only works as expected with the last tested version. Please check it before opening an issue.  
 * "chrome_elf.dll" gets replaced by the Spotify installer each time it updates, hence why you'll probably need to apply the patch again when it happens
 * [Spicetify](https://github.com/khanhas/spicetify-cli) users will need to reapply BlockTheSpot after applying a Spicetify patches.
 * If the automatic install/uninstall scripts do not work, please contact [Nuzair46](https://github.com/Nuzair46)
 * For more support and discussions, join our [Discord server](https://discord.gg/p43cusgUPm) 
-
-
