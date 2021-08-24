@@ -167,6 +167,37 @@ UI isn't changed.
 }
 #>
 
+$ch = Read-Host -Prompt "Optional - Remove ad placeholder. (Experimental) (Y/N) "
+if ($ch -eq 'y') {
+    Add-Type -Assembly 'System.IO.Compression.FileSystem'
+
+    Copy-Item -Path "$SpotifyApps\xpui.spa" -Destination "$SpotifyApps\xpui.spa.bak"
+
+    $zip = [System.IO.Compression.ZipFile]::Open("$SpotifyApps\xpui.spa", 'update')
+    $entry = $zip.GetEntry('xpui.js')
+
+    # Extract xpui.js from zip to memory
+    $reader = New-Object System.IO.StreamReader($entry.Open())
+    $xpuiContents = $reader.ReadToEnd()
+    $reader.Close()
+
+    # Replace ".ads.leaderboard.isEnabled" + separator - '}' or ')'
+    # With ".ads.leaderboard.isEnabled&&false" + separator
+    $xpuiContents = $xpuiContents -replace '(\.ads\.leaderboard\.isEnabled)(}|\))', '$1&&false$2'
+
+    # Rewrite it to the zip
+    $writer = New-Object System.IO.StreamWriter($entry.Open())
+    $writer.BaseStream.SetLength(0)
+    $writer.Write($xpuiContents)
+    $writer.Close()
+
+    $zip.Dispose()
+} else {
+     Write-Host @'
+Won't remove ad placeholder.
+'@`n
+}
+
 $tempDirectory = $PWD
 Pop-Location
 
