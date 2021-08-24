@@ -181,9 +181,9 @@ if ($ch -eq 'y') {
     $xpuiContents = $reader.ReadToEnd()
     $reader.Close()
 
-    # Replace ".ads.leaderboard.isEnabled}"
-    # With ".ads.leaderboard.isEnabled&&false}"
-    $xpuiContents = $xpuiContents -replace '(\.ads\.leaderboard\.isEnabled)}', '$1&&false}'
+    # Replace ".ads.leaderboard.isEnabled" + separator - '}' or ')'
+    # With ".ads.leaderboard.isEnabled&&false" + separator
+    $xpuiContents = $xpuiContents -replace '(\.ads\.leaderboard\.isEnabled)(}|\))', '$1&&false$2'
 
     # Rewrite it to the zip
     $writer = New-Object System.IO.StreamWriter($entry.Open())
