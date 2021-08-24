@@ -51,7 +51,7 @@ or
 * Reinstall Spotify 
 
 ### Known Issues:  
-* You may face issue [#150](https://github.com/mrpond/BlockTheSpot/issues/150).    
+* You may face issue [#150](https://github.com/mrpond/BlockTheSpot/issues/150). Can be fixed by enabling the experimental feature when using `BlockTheSpot.bat`.    
 * We support last 2 version of Spotify (latest + previous) only. Please check it before opening an issue.
 
 ### Additional Notes:  
