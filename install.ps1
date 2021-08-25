@@ -167,7 +167,7 @@ UI isn't changed.
 }
 #>
 
-$ch = Read-Host -Prompt "Optional - Remove ad placeholder. (Experimental) (Y/N) "
+$ch = Read-Host -Prompt "Optional - Remove ad placeholder and upgrade button. (Experimental) (Y/N) "
 if ($ch -eq 'y') {
     Add-Type -Assembly 'System.IO.Compression.FileSystem'
 
@@ -184,7 +184,10 @@ if ($ch -eq 'y') {
     # Replace ".ads.leaderboard.isEnabled" + separator - '}' or ')'
     # With ".ads.leaderboard.isEnabled&&false" + separator
     $xpuiContents = $xpuiContents -replace '(\.ads\.leaderboard\.isEnabled)(}|\))', '$1&&false$2'
-
+    
+    # Delete ".createElement(XX,{onClick:X,className:XX.X.UpgradeButton}),X()"
+    $xpuiContents = $xpuiContents -replace '\.createElement\([^.,{]+,{onClick:[^.,]+,className:[^.]+\.[^.]+\.UpgradeButton}\),[^.(]+\(\)', ''
+    
     # Rewrite it to the zip
     $writer = New-Object System.IO.StreamWriter($entry.Open())
     $writer.BaseStream.SetLength(0)
@@ -194,7 +197,7 @@ if ($ch -eq 'y') {
     $zip.Dispose()
 } else {
      Write-Host @'
-Won't remove ad placeholder.
+Won't remove ad placeholder and upgrade button.
 '@`n
 }
 
