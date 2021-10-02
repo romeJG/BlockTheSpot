@@ -51,10 +51,11 @@ or
 * Reinstall Spotify 
 
 ### Known Issues:  
-* You may face issue [#150](https://github.com/mrpond/BlockTheSpot/issues/150).    
+* You may face issue [#150](https://github.com/mrpond/BlockTheSpot/issues/150). Can be fixed by enabling the experimental feature when using `BlockTheSpot.bat`.    
 * We support last 2 version of Spotify (latest + previous) only. Please check it before opening an issue.
 
 ### Additional Notes:  
+* Remove "Upgrade" Button [#83](https://github.com/mrpond/BlockTheSpot/issues/83) and Remove "Ad Placeholder" [#150](https://github.com/mrpond/BlockTheSpot/issues/150) only works when you use any of the auto installation methods and press `y` when prompted.  
 * "chrome_elf.dll" gets replaced by the Spotify installer each time it updates, hence why you'll probably need to apply the patch again when it happens
 * [Spicetify](https://github.com/khanhas/spicetify-cli) users will need to reapply BlockTheSpot after applying a Spicetify patches.
 * If the automatic install/uninstall scripts do not work, please contact [Nuzair46](https://github.com/Nuzair46)
