@@ -87,8 +87,9 @@ DWORD WINAPI KillBanner (LPVOID)
 	MODULEINFO mInfo = { 0 };
 	if (GetModuleInformation (GetCurrentProcess (), hModule, &mInfo, sizeof (MODULEINFO))) {
 		g_Logger.Log ("GetModuleInformation OK!");
-		auto skipPod = FindPattern ((uint8_t*)hModule, mInfo.SizeOfImage, (BYTE*)"\x83\xC4\x08\x84\xC0\x0F\x84\xE5\x03\x00\x00", "xxxxxxxxxxx");
-
+		//auto skipPod = FindPattern ((uint8_t*)hModule, mInfo.SizeOfImage, (BYTE*)"\x83\xC4\x08\x84\xC0\x0F\x84\xE5\x03\x00\x00", "xxxxxxxxxxx");
+		auto skipPod = FindPattern ((uint8_t*)hModule, mInfo.SizeOfImage, (BYTE*)"\x6C\xFF\xFF\xFF\x07\x0F\x85\xB7\x02\x00\x00", "xxxxxxxxxxx");
+		//Spotify for Windows 		1.1.69.612.gb7409abc
 		if (skipPod)
 		{
 			DWORD oldProtect;
