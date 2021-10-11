@@ -12,7 +12,7 @@
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
         <strong>Last updated:</strong> 2 October 2021<br>
-        <strong>Last tested version:</strong> 1.1.69.612.gb7409abc
+        <strong>Last tested version:</strong> 1.1.70.610.g4585142b
     </p> 
 </center>
 
