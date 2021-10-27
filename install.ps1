@@ -171,6 +171,7 @@ $ch = Read-Host -Prompt "Optional - Remove ad placeholder and upgrade button. (Y
 if ($ch -eq 'y') {
     $xpuiBundlePath = "$SpotifyApps\xpui.spa"
     $xpuiUnpackedPath = "$SpotifyApps\xpui\xpui.js"
+    $fromZip = $false
     
     # Try to read xpui.js from xpui.spa for normal Spotify installations, or
     # directly from Apps/xpui/xpui.js in case Spicetify is installed.
@@ -185,6 +186,8 @@ if ($ch -eq 'y') {
         $reader = New-Object System.IO.StreamReader($entry.Open())
         $xpuiContents = $reader.ReadToEnd()
         $reader.Close()
+
+        $fromZip = $true
     } elseif (Test-Path $xpuiUnpackedPath) {
         Copy-Item -Path $xpuiUnpackedPath -Destination "$xpuiUnpackedPath.bak"
         $xpuiContents = Get-Content -Path $xpuiUnpackedPath -Raw
@@ -200,7 +203,7 @@ if ($ch -eq 'y') {
         # Delete ".createElement(XX,{onClick:X,className:XX.X.UpgradeButton}),X()"
         $xpuiContents = $xpuiContents -replace '\.createElement\([^.,{]+,{onClick:[^.,]+,className:[^.]+\.[^.]+\.UpgradeButton}\),[^.(]+\(\)', ''
     
-        if ($zip) {
+        if ($fromZip) {
             # Rewrite it to the zip
             $writer = New-Object System.IO.StreamWriter($entry.Open())
             $writer.BaseStream.SetLength(0)
