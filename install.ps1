@@ -169,12 +169,11 @@ UI isn't changed.
 
 $ch = Read-Host -Prompt "Optional - Remove ad placeholder and upgrade button. (Y/N) "
 if ($ch -eq 'y') {
-    # Try to read xpui.js from xpui.spa for normal Spotify installations, or
-    # directly from Apps/xpui/xpui.js in case Spicetify is installed.
-    
     $xpuiBundlePath = "$SpotifyApps\xpui.spa"
     $xpuiUnpackedPath = "$SpotifyApps\xpui\xpui.js"
     
+    # Try to read xpui.js from xpui.spa for normal Spotify installations, or
+    # directly from Apps/xpui/xpui.js in case Spicetify is installed.
     if (Test-Path $xpuiBundlePath) {
         Add-Type -Assembly 'System.IO.Compression.FileSystem'
         Copy-Item -Path $xpuiBundlePath -Destination "$xpuiBundlePath.bak"
