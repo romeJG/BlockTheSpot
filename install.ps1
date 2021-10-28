@@ -191,6 +191,8 @@ if ($ch -eq 'y') {
     } elseif (Test-Path $xpuiUnpackedPath) {
         Copy-Item -Path $xpuiUnpackedPath -Destination "$xpuiUnpackedPath.bak"
         $xpuiContents = Get-Content -Path $xpuiUnpackedPath -Raw
+
+        Write-Host 'Spicetify detected - You may need to reinstall BTS after running "spicetify apply".';
     } else {
         Write-Host 'Could not find xpui.js, please open an issue on the BlockTheSpot repository.'
     }
