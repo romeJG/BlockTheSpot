@@ -42,8 +42,9 @@ Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/mrpond/Blo
 or
 
 1. Browse to your Spotify installation folder `%APPDATA%\Spotify`
+2. Rename `chrome_elf.dll` to `chrome_elf_bak.dll`
 2. Download `chrome_elf.zip` from [releases](https://github.com/mrpond/BlockTheSpot/releases)
-3. Unzip and replace `chrome_elf.dll` and `config.ini` 
+3. Unzip `chrome_elf.dll` and `config.ini` 
 
 ### Uninstall:
 * Just run uninstall.bat
