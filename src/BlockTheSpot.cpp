@@ -12,7 +12,7 @@ void __stdcall LoadAPI (LPVOID* destination, LPCSTR apiName)
 	//wchar_t windows[MAX_PATH];
 	//GetSystemDirectoryW(windows, MAX_PATH);
 	//wsprintf(path, L"%s\\netutils.dll", windows);
-	wsprintf (path, ".\\chrome_elf.dll.bak");
+	wsprintf (path, ".\\chrome_elf_bak.dll");
 	HMODULE hModule = GetModuleHandle (path);
 	if (!hModule && !(hModule = LoadLibrary (path)))
 		return;

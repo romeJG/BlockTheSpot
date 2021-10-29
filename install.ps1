@@ -134,8 +134,8 @@ Downloading Latest Spotify full setup, please wait...
   Stop-Process -Name SpotifyFullSetup >$null 2>&1
 }
 
-if (!(test-path $SpotifyDirectory/chrome_elf.dll.bak)){
-	move $SpotifyDirectory\chrome_elf.dll $SpotifyDirectory\chrome_elf.dll.bak >$null 2>&1
+if (!(test-path $SpotifyDirectory/chrome_elf_bak.dll)){
+	move $SpotifyDirectory\chrome_elf.dll $SpotifyDirectory\chrome_elf_bak.dll >$null 2>&1
 }
 
 Write-Host 'Patching Spotify...'
