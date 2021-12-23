@@ -1,7 +1,7 @@
 # Ignore errors from `Stop-Process`
 $PSDefaultParameterValues['Stop-Process:ErrorAction'] = [System.Management.Automation.ActionPreference]::SilentlyContinue
 
-Write-Host -Object @'
+Write-Host @'
 *****************
 @mrpond message:
 #Thailand #ThaiProtest #ThailandProtest #freeYOUTH
@@ -9,7 +9,7 @@ Please retweet these hashtag, help me stop dictator government!
 *****************
 '@
 
-Write-Host -Object @'
+Write-Host @'
 *****************
 Author: @Nuzair46
 *****************
@@ -19,7 +19,7 @@ $SpotifyDirectory = Join-Path -Path $env:APPDATA -ChildPath 'Spotify'
 $SpotifyExecutable = Join-Path -Path $SpotifyDirectory -ChildPath 'Spotify.exe'
 $SpotifyApps = Join-Path -Path $SpotifyDirectory -ChildPath 'Apps'
 
-Write-Host -Object "Stopping Spotify...`n"
+Write-Host "Stopping Spotify...`n"
 Stop-Process -Name Spotify
 Stop-Process -Name SpotifyWebHelper
 
@@ -172,11 +172,11 @@ if ($ch -eq 'y')
     Copy-Item -LiteralPath $xpuiUnpackedPath -Destination "$xpuiUnpackedPath.bak"
     $xpuiContents = Get-Content -LiteralPath $xpuiUnpackedPath -Raw
 
-    Write-Host -Object 'Spicetify detected - You may need to reinstall BTS after running "spicetify apply".';
+    Write-Host 'Spicetify detected - You may need to reinstall BTS after running "spicetify apply".';
   }
   else
   {
-    Write-Host -Object 'Could not find xpui.js, please open an issue on the BlockTheSpot repository.'
+    Write-Host 'Could not find xpui.js, please open an issue on the BlockTheSpot repository.'
   }
 
   if ($xpuiContents)
@@ -206,7 +206,7 @@ if ($ch -eq 'y')
 }
 else
 {
-  Write-Host -Object "Won't remove ad placeholder and upgrade button.`n"
+  Write-Host "Won't remove ad placeholder and upgrade button.`n"
 }
 
 $tempDirectory = $PWD
@@ -214,11 +214,12 @@ Pop-Location
 
 Remove-Item -LiteralPath $tempDirectory -Recurse
 
-Write-Host -Object 'Patching Complete, starting Spotify...'
-Start-Process -WorkingDirectory $SpotifyDirectory -FilePath $SpotifyExecutable
-Write-Host -Object 'Done.'
+Write-Host 'Patching Complete, starting Spotify...'
 
-Write-Host -Object @'
+Start-Process -WorkingDirectory $SpotifyDirectory -FilePath $SpotifyExecutable
+Write-Host 'Done.'
+
+Write-Host @'
 *****************
 @mrpond message:
 #Thailand #ThaiProtest #ThailandProtest #freeYOUTH
