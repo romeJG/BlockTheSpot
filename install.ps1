@@ -69,7 +69,7 @@ Author: @Nuzair46
 *****************
 '@
 
-$useBitTransfer = $null -ne (Get-Module -Name BitsTransfer -ListAvailable)
+$useBitTransfer = $null -ne (Get-Module -Name BitsTransfer -ListAvailable) -and ($PSVersionTable.PSVersion.Major -le 5)
 
 $spotifyDirectory = Join-Path -Path $env:APPDATA -ChildPath 'Spotify'
 $spotifyExecutable = Join-Path -Path $spotifyDirectory -ChildPath 'Spotify.exe'
