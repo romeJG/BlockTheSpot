@@ -17,9 +17,9 @@ Author: @Nuzair46
 
 $useBitTransfer = $null -ne (Get-Module -Name BitsTransfer -ListAvailable)
 
-$SpotifyDirectory = Join-Path -Path $env:APPDATA -ChildPath 'Spotify'
-$SpotifyExecutable = Join-Path -Path $SpotifyDirectory -ChildPath 'Spotify.exe'
-$SpotifyApps = Join-Path -Path $SpotifyDirectory -ChildPath 'Apps'
+$spotifyDirectory = Join-Path -Path $env:APPDATA -ChildPath 'Spotify'
+$spotifyExecutable = Join-Path -Path $spotifyDirectory -ChildPath 'Spotify.exe'
+$spotifyApps = Join-Path -Path $spotifyDirectory -ChildPath 'Apps'
 
 Write-Host "Stopping Spotify...`n"
 Stop-Process -Name Spotify
@@ -91,7 +91,7 @@ catch
 Expand-Archive -Force -LiteralPath "$elfPath" -DestinationPath $PWD
 Remove-Item -LiteralPath "$elfPath" -Force
 
-$spotifyInstalled = Test-Path -LiteralPath $SpotifyExecutable
+$spotifyInstalled = Test-Path -LiteralPath $spotifyExecutable
 $update = $false
 if ($spotifyInstalled)
 {
@@ -136,7 +136,7 @@ if (-not $spotifyInstalled -or $update)
     Read-Host 'Press any key to exit...'
     exit
   }
-  New-Item -Path $SpotifyDirectory -ItemType:Directory -Force | Write-Verbose
+  New-Item -Path $spotifyDirectory -ItemType:Directory -Force | Write-Verbose
 
   [System.Security.Principal.WindowsPrincipal] $principal = [System.Security.Principal.WindowsIdentity]::GetCurrent()
   $isUserAdmin = $principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
@@ -174,8 +174,8 @@ if (-not $spotifyInstalled -or $update)
   Stop-Process -Name SpotifyWebHelper
   Stop-Process -Name SpotifyFullSetup
 }
-$elfDllBackFilePath = Join-Path -Path $SpotifyDirectory -ChildPath 'chrome_elf_bak.dll'
-$elfBackFilePath = Join-Path -Path $SpotifyDirectory -ChildPath 'chrome_elf.dll'
+$elfDllBackFilePath = Join-Path -Path $spotifyDirectory -ChildPath 'chrome_elf_bak.dll'
+$elfBackFilePath = Join-Path -Path $spotifyDirectory -ChildPath 'chrome_elf.dll'
 if ((Test-Path $elfDllBackFilePath) -eq $false)
 {
   Move-Item -LiteralPath "$elfBackFilePath" -Destination "$elfDllBackFilePath" | Write-Verbose
@@ -184,13 +184,13 @@ if ((Test-Path $elfDllBackFilePath) -eq $false)
 Write-Host 'Patching Spotify...'
 $patchFiles = (Join-Path -Path $PWD -ChildPath 'chrome_elf.dll'), (Join-Path -Path $PWD -ChildPath 'config.ini')
 
-Copy-Item -LiteralPath $patchFiles -Destination "$SpotifyDirectory"
+Copy-Item -LiteralPath $patchFiles -Destination "$spotifyDirectory"
 
 $ch = Read-Host -Prompt 'Optional - Remove ad placeholder and upgrade button. (Y/N)'
 if ($ch -eq 'y')
 {
-  $xpuiBundlePath = Join-Path -Path $SpotifyApps -ChildPath 'xpui.spa'
-  $xpuiUnpackedPath = Join-Path -Path (Join-Path -Path $SpotifyApps -ChildPath 'xpui') -ChildPath 'xpui.js'
+  $xpuiBundlePath = Join-Path -Path $spotifyApps -ChildPath 'xpui.spa'
+  $xpuiUnpackedPath = Join-Path -Path (Join-Path -Path $spotifyApps -ChildPath 'xpui') -ChildPath 'xpui.js'
   $fromZip = $false
 
   # Try to read xpui.js from xpui.spa for normal Spotify installations, or
@@ -259,7 +259,7 @@ Remove-Item -LiteralPath $tempDirectory -Recurse
 
 Write-Host 'Patching Complete, starting Spotify...'
 
-Start-Process -WorkingDirectory $SpotifyDirectory -FilePath $SpotifyExecutable
+Start-Process -WorkingDirectory $spotifyDirectory -FilePath $spotifyExecutable
 Write-Host 'Done.'
 
 Write-Host @'
