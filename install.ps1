@@ -15,6 +15,8 @@ Author: @Nuzair46
 *****************
 '@
 
+$useBitTransfer = $null -ne (Get-Module -Name BitsTransfer -ListAvailable)
+
 $SpotifyDirectory = Join-Path -Path $env:APPDATA -ChildPath 'Spotify'
 $SpotifyExecutable = Join-Path -Path $SpotifyDirectory -ChildPath 'Spotify.exe'
 $SpotifyApps = Join-Path -Path $SpotifyDirectory -ChildPath 'Apps'
@@ -65,12 +67,20 @@ $webClient = New-Object -TypeName ([System.Net.WebClient])
 $elfPath = Join-Path -Path $PWD -ChildPath 'chrome_elf.zip'
 try
 {
-  $webClient.DownloadFile(
-    # Remote file URL
-    'https://github.com/mrpond/BlockTheSpot/releases/latest/download/chrome_elf.zip',
-    # Local file path
-    "$elfPath"
-  )
+  $uri = 'https://github.com/mrpond/BlockTheSpot/releases/latest/download/chrome_elf.zip'
+  if ($useBitTransfer)
+  {
+    Start-BitsTransfer -Source $uri -Destination "$elfPath"
+  }
+  else
+  {
+    $webClient.DownloadFile(
+      # Remote file URL
+      $uri,
+      # Local file path
+      "$elfPath"
+    )
+  }
 }
 catch
 {
@@ -101,16 +111,24 @@ else
 }
 if (-not $spotifyInstalled -or $update)
 {
-  Write-Host 'Downloading Latest Spotify full setup, please wait...'
+  Write-Host 'Downloading the latest Spotify full setup, please wait...'
   $spotifySetupFilePath = Join-Path -Path $PWD -ChildPath 'SpotifyFullSetup.exe'
   try
   {
-    $webClient.DownloadFile(
-      # Remote file URL
-      'https://download.scdn.co/SpotifyFullSetup.exe',
-      # Local file path
-      "$spotifySetupFilePath"
-    )
+    $uri = 'https://download.scdn.co/SpotifyFullSetup.exe'
+    if ($useBitTransfer)
+    {
+      Start-BitsTransfer -Source $uri -Destination "$spotifySetupFilePath"
+    }
+    else
+    {
+      $webClient.DownloadFile(
+        # Remote file URL
+        $uri,
+        # Local file path
+        "$spotifySetupFilePath"
+      )
+    }
   }
   catch
   {
@@ -147,7 +165,8 @@ if (-not $spotifyInstalled -or $update)
 
   while ($null -eq (Get-Process -Name Spotify -ErrorAction SilentlyContinue))
   {
-    #waiting until installation complete
+    # Waiting until installation complete
+    Start-Sleep -Milliseconds 100
   }
   Write-Host 'Stopping Spotify...Again'
 
