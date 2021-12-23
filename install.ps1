@@ -119,8 +119,32 @@ if (-not $spotifyInstalled -or $update)
     exit
   }
   New-Item -Path $SpotifyDirectory -ItemType:Directory -Force | Write-Verbose
+
+  [System.Security.Principal.WindowsPrincipal] $principal = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+  $isUserAdmin = $principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
   Write-Host 'Running installation...'
-  Start-Process -FilePath "$spotifySetupFilePath"
+  if ($isUserAdmin)
+  {
+    Write-Host
+    Write-Host 'Creating scheduled task...'
+    $apppath = 'powershell.exe'
+    $taskname = 'Spotify install'
+    $action = New-ScheduledTaskAction -Execute $apppath -Argument "-NoLogo -NoProfile -Command & `'$spotifySetupFilePath`'"
+    $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date)
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -WakeToRun
+    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName $taskname -Settings $settings -Force | Write-Verbose
+    Write-Host 'The install task has been scheduled. Starting the task...'
+    Start-ScheduledTask -TaskName $taskname
+    Start-Sleep -Seconds 2
+    Write-Host 'Unregistering the task...'
+    Unregister-ScheduledTask -TaskName $taskname -Confirm:$false
+    Start-Sleep -Seconds 2
+  }
+  else
+  {
+    Start-Process -FilePath "$spotifySetupFilePath"
+  }
+
   while ($null -eq (Get-Process -Name Spotify -ErrorAction SilentlyContinue))
   {
     #waiting until installation complete
