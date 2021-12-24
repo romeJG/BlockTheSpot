@@ -80,7 +80,7 @@ Please retweet these hashtag, help me stop dictator government!
 
 Write-Host @'
 *****************
-Author: @Nuzair46
+Authors: @Nuzair46, @KUTlime
 *****************
 '@
 
