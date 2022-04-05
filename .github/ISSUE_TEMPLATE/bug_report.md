@@ -7,7 +7,13 @@ assignees: ''
 
 ---
 
-Make sure you have completed everything in the following checklist.
+---
+### Describe the bug
+A clear and concise description of what the bug is, along with your OS [eg. Windows 10]:
+
+Zip and attach the log file.
+
+---
 
  - [ ] You are using the Spotify `last tested version` mentioned in the [README](https://github.com/mrpond/BlockTheSpot/blob/master/README.md).
  - [ ] You are using the latest [BlockTheSpot](https://www.github.com/mrpond/BlockTheSpot/releases) from github.
@@ -15,11 +21,11 @@ Make sure you have completed everything in the following checklist.
  - [ ] You read through the [known issues](https://github.com/mrpond/BlockTheSpot/blob/master/README.md#known-issues) section in the README.
  - [ ] You read through the [additional notes](https://github.com/mrpond/BlockTheSpot/blob/master/README.md#additional-notes) section in the README.
  - [ ] You enabled logging by editing config.ini `set log = 1`.
+ - [ ] Make sure whether an issue related yours is already open or not.
+ - [ ] Make sure you have completed everything in the above checklist.
 
-### Describe the bug
-A clear and concise description of what the bug is, along with your OS [eg. Windows 10]:
-
-Zip and attach the log file.
+## Note: 
+- Antivirus detections are false positive. Please only open an issue if you find any vulnerability in the code. False reports will be closed without notice.
 
 <!-- Remove this line and 
 
